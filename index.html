@@ -66,9 +66,8 @@
                 <span>Total:</span>
                 <span id="cart-total-amount">$0</span>
             </div>
-            <div id="paypal-container" class="paypal-container">
-                <button class="paypal-btn" disabled>Pagar con PayPal</button>
-            </div>
+            <!-- CONTENEDOR PAYPAL SANDBOX -->
+            <div id="paypal-button-container"></div>
         </div>
     </aside>
     
@@ -97,6 +96,8 @@
     </div>
 </div>
 
+<!-- SDK DE PAYPAL (Reemplaza TU_CLIENT_ID con tu ID real) -->
+<script src="https://www.paypal.com/sdk/js?client-id=AZUv1i_7_QIdIeak5K4gjNYtd_ohUI0ZVXzA1WKTg0PEONlS5cSwe_QsTTD7VPB-iXUhh52nacag60dU&currency=USD"></script>
 <script src="script.js"></script>
 </body>
 </html>

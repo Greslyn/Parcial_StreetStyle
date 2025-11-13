@@ -17,7 +17,6 @@ const closeCartBtn = document.getElementById('close-cart');
 const cartItemsContainer = document.getElementById('cart-items');
 const cartTotalAmount = document.getElementById('cart-total-amount');
 const cartCount = document.getElementById('cart-count');
-const paypalBtn = document.querySelector('.paypal-btn'); // Botón 'Pagar' en el sidebar
 
 // Variables del Modal de Pago
 const paymentModal = document.getElementById('payment-modal');
@@ -98,17 +97,6 @@ function updateCartCount() {
 function calculateTotal() {
     const total = cart.reduce((sum, item) => sum + (item.precio * item.quantity), 0);
     cartTotalAmount.textContent = formatter.format(total);
-
-    // Activar botón de 'Pagar' del sidebar solo si hay productos
-    if (total > 0) {
-        paypalBtn.disabled = false;
-        paypalBtn.textContent = `Pagar ${formatter.format(total)} - Opciones`;
-        paypalBtn.style.backgroundColor = '#0070BA';
-    } else {
-        paypalBtn.disabled = true;
-        paypalBtn.textContent = 'Pagar con PayPal'; // Texto base cuando está vacío
-        paypalBtn.style.backgroundColor = '#ccc';
-    }
 }
 
 function renderCartItems() {
@@ -200,16 +188,6 @@ function finalizePurchase() {
 
 // ** MANEJADORES DE EVENTOS **
 
-// MODIFICADO: El botón de Pagar del carrito AHORA abre el modal.
-paypalBtn.addEventListener('click', (e) => {
-    e.preventDefault(); 
-    if (!paypalBtn.disabled) {
-        // Cierra el sidebar y abre el modal de pago
-        cartSidebar.classList.remove('open');
-        paymentModal.classList.add('open');
-    }
-});
-
 // Cerrar Modal de Pago
 closeModalBtn.addEventListener('click', () => {
     paymentModal.classList.remove('open');
@@ -268,12 +246,6 @@ cartItemsContainer.addEventListener('click', (e) => {
     }
 });
 
-// Inicialización de la Tienda
-document.addEventListener('DOMContentLoaded', () => {
-    setupFilters(); 
-    renderProductos(productos); 
-    renderCartItems(); 
-});
 // ** LÓGICA DEL CARRUSEL **
 
 let slideIndex = 0;
@@ -322,6 +294,47 @@ window.scrollToProducts = function() {
         });
     }
 }
+
+// PAYPAL SANDBOX INTEGRATION
+function initPayPalButton() {
+    paypal.Buttons({
+        createOrder: (data, actions) => {
+            const totalCOP = cart.reduce((sum, item) => sum + (item.precio * item.quantity), 0);
+            // Conversión: 1 USD = ~4000 COP (ajusta según tasa actual)
+            const totalUSD = (totalCOP / 4000).toFixed(2);
+            
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        currency_code: "USD",
+                        value: totalUSD
+                    }
+                }]
+            });
+        },
+        onApprove: (data, actions) => {
+            return actions.order.capture().then((orderData) => {
+                alert('¡Pago completado! ID de orden: ' + orderData.id);
+                cart = [];
+                saveCart();
+                updateCartCount();
+                renderCartItems();
+                cartSidebar.classList.remove('open');
+            });
+        },
+        onError: (err) => {
+            alert('Error en el pago: ' + err);
+        }
+    }).render('#paypal-button-container');
+}
+
+// Inicializar PayPal cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', () => {
+    renderProductos(productos);
+    setupFilters();
+    renderCartItems();
+    initPayPalButton();
+});
 
 // Asegúrate de que showSlide(0) se ejecute al cargar el DOM para mostrar el primer slide
 document.addEventListener('DOMContentLoaded', () => {
