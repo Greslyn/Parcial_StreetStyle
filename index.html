@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreetStyle - Tu Tienda de Moda Urbana</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">StreetStyle</div>
+        <nav>
+            <a href="#">Tienda</a>
+            <a href="#">Sobre Nosotros</a>
+            <a href="#">Contacto</a>
+        </nav>
+        <div id="cart-icon" class="cart-icon">
+            🛒 <span id="cart-count" class="cart-count">0</span>
+        </div>
+    </header>
+    <section id="hero-carousel" class="hero-carousel">
+    <div class="carousel-slide active" style="background-image: url('/Imagenes/TARz5i.jpg');">
+        <div class="hero-content">
+            <h1>Tu Calle. Tu Estilo. Tu Firma.</h1>
+            <p>Explora lo último en diseño exclusivo y comodidad.</p>
+            <button class="cta-btn" onclick="scrollToProducts()">Ver Colección</button>
+        </div>
+    </div>
+    <div class="carousel-slide" style="background-image: url('/Imagenes/vogue-street-style-mens-fashion-dsfji3119irooc02.jpg');">
+        <div class="hero-content">
+            <h1>Busos Oversize: El Comfort que Domina.</h1>
+            <p>La máxima expresión del estilo relajado y moderno.</p>
+            <button class="cta-btn" onclick="scrollToProducts()">Ver Colección</button>
+        </div>
+    </div>
+    
+    <button class="prev-slide">❮</button>
+    <button class="next-slide">❯</button>
+</section>
+
+<main>
+    <main>
+        <section class="catalog-header">
+            <h1>Explora la Colección</h1>
+        </section>
+
+        <section id="filter-bar" class="filter-bar">
+            </section>
+
+        <section id="product-container" class="product-container">
+            </section>
+    </main>
+
+    <aside id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2>Tu Carrito 🛍️</h2>
+            <button id="close-cart" class="close-btn">X</button>
+        </div>
+        <div id="cart-items" class="cart-items">
+            </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-amount">$0</span>
+            </div>
+            <div id="paypal-container" class="paypal-container">
+                <button class="paypal-btn" disabled>Pagar con PayPal</button>
+            </div>
+        </div>
+    </aside>
+    
+<div id="payment-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal-btn">&times;</span>
+        <h2>Selecciona tu Método de Pago</h2>
+        
+        <div class="payment-options">
+            <label class="payment-option-label">
+                <input type="radio" name="paymentMethod" value="credito" required>
+                Tarjeta de Crédito 💳
+            </label>
+            <label class="payment-option-label">
+                <input type="radio" name="paymentMethod" value="debito">
+                Tarjeta de Débito 🏧
+            </label>
+            <label class="payment-option-label">
+                <input type="radio" name="paymentMethod" value="paypal">
+                PayPal 🅿️
+            </label>
+        </div>
+        
+        <button id="confirm-payment-btn" class="add-to-cart-btn" disabled>Confirmar Pago</button>
+        <p class="payment-warning" style="color: red; margin-top: 15px; display: none;">Debes seleccionar una opción de pago.</p>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,488 @@
+/* Paleta de Colores y Tipografía */
+:root {
+    --color-black: #121212; /* Street Night */
+    --color-white: #FFFFFF; /* Blanco Puro */
+    --color-red: #FF4545; /* Style Pop (Rojo Neón) */
+    --color-gray: #888888; /* Gris Urbano */
+    --font-primary: 'Montserrat', sans-serif;
+    --font-secondary: 'Poppins', sans-serif;
+}
+
+/* Estilos Globales */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-secondary);
+    background-color: var(--color-black); /* Fondo principal negro */
+    color: var(--color-white);
+    min-height: 100vh;
+}
+
+/* 1. CABECERA (Header) */
+header {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    border-bottom: 1px solid var(--color-gray);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-family: var(--font-primary);
+    font-size: 1.8em;
+    font-weight: 700;
+}
+
+header nav a {
+    color: var(--color-white);
+    text-decoration: none;
+    margin: 0 15px;
+    transition: color 0.3s;
+}
+
+header nav a:hover {
+    color: var(--color-red); /* Efecto hover en Rojo Neón */
+}
+
+.cart-icon {
+    font-size: 1.5em;
+    cursor: pointer;
+    position: relative;
+    padding: 5px;
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: var(--color-red);
+    color: var(--color-white);
+    border-radius: 50%;
+    padding: 2px 7px;
+    font-size: 0.7em;
+    font-weight: 600;
+}
+
+/* 2. CONTENIDO PRINCIPAL */
+main {
+    padding: 40px 40px;
+}
+
+.catalog-header h1 {
+    font-family: var(--font-primary);
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+/* Barra de Filtrado */
+.filter-bar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.filter-btn {
+    background-color: var(--color-gray);
+    color: var(--color-black);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.filter-btn:hover {
+    background-color: #AAAAAA;
+}
+
+.filter-btn.active {
+    background-color: var(--color-red); /* Rojo Neón activo */
+    color: var(--color-white);
+}
+
+/* Contenedor de Productos */
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+/* Tarjeta de Producto */
+.product-card {
+    background-color: var(--color-white);
+    color: var(--color-black);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Asegura que todas las imágenes tengan la misma altura y estén centradas/cortadas */
+.product-card img {
+    width: 100%;
+    height: 220px;        /* Ajusta la altura según necesites */
+    object-fit: cover;    /* Mantiene proporción, recorta exceso */
+    display: block;
+    border-radius: 6px;
+}
+
+/* Opcional: mantiene alineados los títulos/subtítulos aunque la descripción varíe */
+.product-card h3,
+.product-card .category,
+.product-card .price {
+    margin: 0;
+}
+ 
+/* Si quieres que la altura sea responsiva usando ratio en navegadores modernos */
+@supports (aspect-ratio: 4 / 3) {
+    .product-card img {
+        height: auto;
+        aspect-ratio: 4 / 3;
+    }
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card .category {
+    color: var(--color-gray);
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.product-card h3 {
+    font-family: var(--font-primary);
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.product-card .price {
+    color: var(--color-red); /* Precio en Rojo Neón */
+    font-size: 1.4em;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.add-to-cart-btn {
+    width: 100%;
+    background-color: var(--color-red);
+    color: var(--color-white);
+    border: none;
+    padding: 12px 0;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #D33C3C;
+}
+
+/* 3. CARRITO DE COMPRAS (Sidebar) */
+.cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: -400px; /* Oculto por defecto */
+    width: 380px;
+    height: 100%;
+    background-color: var(--color-white);
+    color: var(--color-black);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+    transition: right 0.4s ease-in-out;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-sidebar.open {
+    right: 0; /* Visible */
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.cart-items {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #eee;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-name {
+    font-weight: 600;
+}
+
+.item-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.qty-btn {
+    background-color: var(--color-gray);
+    color: var(--color-white);
+    border: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.remove-btn {
+    background-color: var(--color-red);
+    color: var(--color-white);
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8em;
+}
+
+.cart-footer {
+    padding: 20px;
+    border-top: 2px solid var(--color-red);
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.cart-total span:last-child {
+    color: var(--color-red);
+}
+
+.paypal-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #0070BA; /* Color de PayPal */
+    color: var(--color-white);
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.paypal-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+/* style.css: Estilos para el Modal de Pago */
+
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 300; /* Superior al sidebar */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro */
+}
+
+.modal.open {
+    display: block;
+}
+
+.modal-content {
+    background-color: var(--color-white);
+    margin: 15% auto; /* Centrar vertical y horizontalmente */
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%; 
+    max-width: 500px;
+    color: var(--color-black);
+    position: relative;
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.close-modal-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal-btn:hover,
+.close-modal-btn:focus {
+    color: var(--color-red);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.payment-option-label {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: border-color 0.3s;
+    font-weight: 600;
+}
+
+.payment-option-label:hover {
+    border-color: var(--color-red);
+}
+
+.payment-option-label input[type="radio"]:checked + span {
+    color: var(--color-red);
+}
+
+/* Estilo para deshabilitar el botón de confirmar pago */
+#confirm-payment-btn:disabled {
+    background-color: var(--color-gray);
+    cursor: not-allowed;
+}
+/* style.css: Estilos para la Portada y Carrusel */
+
+.hero-carousel {
+    position: relative;
+    width: 100%;
+    height: 500px; /* Altura de la portada */
+    overflow: hidden;
+}
+
+.carousel-slide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 0.8s ease-in-out;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+}
+
+.hero-content {
+    background-color: rgba(18, 18, 18, 0.6); /* Fondo semi-transparente oscuro */
+    padding: 30px 60px;
+    border-radius: 10px;
+    text-align: center;
+    color: var(--color-white);
+}
+
+.hero-content h1 {
+    font-family: var(--font-primary);
+    font-size: 3.5em;
+    margin-bottom: 10px;
+    color: var(--color-red); /* Frase llamativa en Rojo Neón */
+}
+
+.hero-content p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+.cta-btn {
+    background-color: var(--color-red);
+    color: var(--color-white);
+    border: none;
+    padding: 15px 35px;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    letter-spacing: 1px;
+}
+
+.cta-btn:hover {
+    background-color: #D33C3C;
+    transform: translateY(-2px);
+}
+
+/* Estilos de navegación del carrusel (opcional pero recomendado) */
+.prev-slide, .next-slide {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--color-white);
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 50;
+    transition: background-color 0.3s;
+}
+
+.prev-slide {
+    left: 10px;
+    border-radius: 50%;
+}
+
+.next-slide {
+    right: 10px;
+    border-radius: 50%;
+}
+
+.prev-slide:hover, .next-slide:hover {
+    background: rgba(255, 69, 69, 0.8); /* Rojo Neón */
+}
